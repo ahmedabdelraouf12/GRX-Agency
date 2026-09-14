@@ -2,14 +2,16 @@
 
 import React, { useState } from 'react'
 import { useLanguage } from '@/context/LanguageContext'
-import { portfolioData, CaseStudy } from '@/lib/data'
+import { CaseStudy } from '@/lib/types'
 import { Sparkles, ArrowUpRight, TrendingUp, X, CheckCircle2 } from 'lucide-react'
+import { Reveal } from '@/components/Reveal'
 
 interface PortfolioProps {
+  portfolio: CaseStudy[]
   onOpenContact: () => void
 }
 
-export const Portfolio: React.FC<PortfolioProps> = ({ onOpenContact }) => {
+export const Portfolio: React.FC<PortfolioProps> = ({ portfolio, onOpenContact }) => {
   const { t, lang, isRTL } = useLanguage()
   const [filter, setFilter] = useState<string>('all')
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null)
@@ -23,8 +25,8 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onOpenContact }) => {
   ]
 
   const filteredItems = filter === 'all'
-    ? portfolioData
-    : portfolioData.filter((item) => item.category === filter)
+    ? portfolio
+    : portfolio.filter((item) => item.category === filter)
 
   return (
     <section id="work" className="py-24 bg-zinc-950/40 relative">
@@ -62,17 +64,17 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onOpenContact }) => {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredItems.map((item) => {
+          {filteredItems.map((item, idx) => {
             const title = lang === 'ar' ? item.titleAr : item.titleEn
             const categoryLabel = lang === 'ar' ? item.categoryLabelAr : item.categoryLabelEn
             const stat1Label = lang === 'ar' ? item.stat1LabelAr : item.stat1LabelEn
             const stat2Label = lang === 'ar' ? item.stat2LabelAr : item.stat2LabelEn
 
             return (
+              <Reveal key={item.id} index={idx} className="h-full">
               <div
-                key={item.id}
                 onClick={() => setSelectedCase(item)}
-                className="glass-card rounded-3xl overflow-hidden cursor-pointer group flex flex-col border border-zinc-800/80"
+                className="glass-card rounded-3xl overflow-hidden cursor-pointer group flex flex-col border border-zinc-800/80 h-full"
               >
                 {/* Image & Badges */}
                 <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-zinc-900">
@@ -135,6 +137,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({ onOpenContact }) => {
                   </div>
                 </div>
               </div>
+              </Reveal>
             )
           })}
         </div>

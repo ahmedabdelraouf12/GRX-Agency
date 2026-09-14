@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useLanguage } from '@/context/LanguageContext'
-import { servicesData, ServiceItem } from '@/lib/data'
+import { ServiceItem } from '@/lib/types'
 import {
   TrendingUp,
   Search,
@@ -14,12 +14,14 @@ import {
   ArrowUpRight,
   Sparkles,
 } from 'lucide-react'
+import { Reveal } from '@/components/Reveal'
 
 interface ServicesProps {
+  services: ServiceItem[]
   onSelectService: (serviceName: string) => void
 }
 
-export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
+export const Services: React.FC<ServicesProps> = ({ services, onSelectService }) => {
   const { t, lang, isRTL } = useLanguage()
 
   const getIcon = (name: string) => {
@@ -63,15 +65,15 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {servicesData.map((service: ServiceItem) => {
-            const title = t(service.titleKey)
-            const desc = t(service.descKey)
+          {services.map((service: ServiceItem, idx: number) => {
+            const title = lang === 'ar' ? service.titleAr : service.titleEn
+            const desc = lang === 'ar' ? service.descAr : service.descEn
             const deliverables = lang === 'ar' ? service.deliverablesAr : service.deliverablesEn
 
             return (
+              <Reveal key={service.id} index={idx} className="h-full">
               <div
-                key={service.id}
-                className="glass-card rounded-3xl p-8 flex flex-col justify-between relative group overflow-hidden border border-zinc-800/80"
+                className="glass-card rounded-3xl p-8 flex flex-col justify-between relative group overflow-hidden border border-zinc-800/80 h-full"
               >
                 {/* Top Ambient Highlight */}
                 <div
@@ -121,6 +123,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
                   />
                 </button>
               </div>
+              </Reveal>
             )
           })}
         </div>

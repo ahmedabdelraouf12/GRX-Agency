@@ -1,20 +1,17 @@
-export interface ServiceItem {
-  id: string
-  titleKey: string
-  descKey: string
-  icon: string
-  badge: string
-  roiMetric: string
-  deliverablesAr: string[]
-  deliverablesEn: string[]
-  color: string
-}
+import { ServiceItem, CaseStudy, PricingPlan, Testimonial, SiteContent } from './types'
 
-export const servicesData: ServiceItem[] = [
+// Default seed content. This is what a fresh install ships with; from the
+// moment an admin saves a change in /dashboard, the live site is served
+// from data/content.json instead (see src/lib/store.ts) and this file is
+// only consulted again if that JSON file is ever deleted.
+
+export const defaultServices: ServiceItem[] = [
   {
     id: 'media-buying',
-    titleKey: 'service_1_title',
-    descKey: 'service_1_desc',
+    titleAr: 'الحملات الإعلانية الممولة (Media Buying)',
+    titleEn: 'Paid Advertising & Media Buying',
+    descAr: 'إدارة متقدمة لإعلانات ميتا (فيسبوك، إنستغرام)، تيك توك، جوجل، وسناب شات مع استراتيجيات تحويل ترفع الـ ROAS.',
+    descEn: 'Mastery across Meta, TikTok, Google, and Snapchat with funnel strategies engineered to maximize ROAS and conversions.',
     icon: 'TrendingUp',
     badge: 'High Impact',
     roiMetric: '4.8x Avg ROAS',
@@ -24,8 +21,10 @@ export const servicesData: ServiceItem[] = [
   },
   {
     id: 'seo-growth',
-    titleKey: 'service_2_title',
-    descKey: 'service_2_desc',
+    titleAr: 'تحسين محركات البحث (SEO & Performance)',
+    titleEn: 'SEO & Organic Growth',
+    descAr: 'تصدر النتائج الأولى في جوجل وجلب عملاء مهتمين ومستهدفين بأقل تكلفة ودون دفع مبالغ مستمرة.',
+    descEn: 'Dominate Google search rankings and attract qualified high-intent customers without perpetual ad spending.',
     icon: 'Search',
     badge: 'Organic Scale',
     roiMetric: '+320% Traffic',
@@ -35,8 +34,10 @@ export const servicesData: ServiceItem[] = [
   },
   {
     id: 'social-media',
-    titleKey: 'service_3_title',
-    descKey: 'service_3_desc',
+    titleAr: 'إدارة وتنمية السوشيال ميديا',
+    titleEn: 'Social Media & Community Building',
+    descAr: 'صناعة محتوى إبداعي جذاب، ريلز وتيك توك فيروسية، وبناء مجتمع وفي متفاعل مع علامتك التجارية.',
+    descEn: 'High-converting video content, viral Reels/TikToks, and loyal community management that turns followers into repeat buyers.',
     icon: 'Share2',
     badge: 'Community',
     roiMetric: '1.2M+ Reach/mo',
@@ -46,8 +47,10 @@ export const servicesData: ServiceItem[] = [
   },
   {
     id: 'branding',
-    titleKey: 'service_4_title',
-    descKey: 'service_4_desc',
+    titleAr: 'الهوية البصرية وتصميم البراندينج',
+    titleEn: 'Branding & Visual Identity',
+    descAr: 'تصميم هويات بصرية فاخرة وأدلة علامة تجارية متكاملة تعبر عن تميز شركتك وتجذب شريحتك المستهدفة.',
+    descEn: 'Luxurious branding, brand guidelines, and unique design assets that command authority and premium pricing.',
     icon: 'Palette',
     badge: 'Premium Identity',
     roiMetric: '100% Unique',
@@ -57,8 +60,10 @@ export const servicesData: ServiceItem[] = [
   },
   {
     id: 'video-production',
-    titleKey: 'service_5_title',
-    descKey: 'service_5_desc',
+    titleAr: 'إنتاج الفيديو والموشن جرافيكس',
+    titleEn: 'Video Production & 3D Motion',
+    descAr: 'تصوير احترافي، فيديوهات إعلانية سينمائية، وموشن جرافيك 2D/3D يحكي قصة منتجك بأسلوب خاطف للأنظار.',
+    descEn: 'High-end commercial videography, cinematic ad creatives, and 2D/3D motion graphics that stop the scroll.',
     icon: 'Video',
     badge: 'Creative Power',
     roiMetric: '3x CTR Boost',
@@ -68,8 +73,10 @@ export const servicesData: ServiceItem[] = [
   },
   {
     id: 'web-development',
-    titleKey: 'service_6_title',
-    descKey: 'service_6_desc',
+    titleAr: 'تطوير المواقع والمتاجر الإلكترونية',
+    titleEn: 'Web & E-Commerce Engineering',
+    descAr: 'مواقع فائقة السرعة ومتاجر مهيأة لرفع معدل التحويل (CRO) باستخدام أحدث تقنيات الويب والذكاء الاصطناعي.',
+    descEn: 'Lightning-fast Next.js websites and Shopify stores designed with deep CRO principles to turn clicks into customers.',
     icon: 'Code2',
     badge: 'Next.js & Speed',
     roiMetric: '99% Speed Score',
@@ -79,26 +86,7 @@ export const servicesData: ServiceItem[] = [
   },
 ]
 
-export interface CaseStudy {
-  id: string
-  titleAr: string
-  titleEn: string
-  category: 'ads' | 'branding' | 'ecommerce' | 'video'
-  categoryLabelAr: string
-  categoryLabelEn: string
-  client: string
-  image: string
-  stat1: string
-  stat1LabelAr: string
-  stat1LabelEn: string
-  stat2: string
-  stat2LabelAr: string
-  stat2LabelEn: string
-  summaryAr: string
-  summaryEn: string
-}
-
-export const portfolioData: CaseStudy[] = [
+export const defaultPortfolio: CaseStudy[] = [
   {
     id: 'lumina-fashion',
     titleAr: 'مضاعفة مبيعات متجر الأزياء الفاخرة بنسبة 420%',
@@ -184,23 +172,7 @@ export const clientLogos = [
   'KINETIC LABS',
 ]
 
-export interface PricingPlan {
-  id: string
-  nameAr: string
-  nameEn: string
-  badge?: string
-  priceAr: string
-  priceEn: string
-  periodAr: string
-  periodEn: string
-  descAr: string
-  descEn: string
-  popular?: boolean
-  featuresAr: string[]
-  featuresEn: string[]
-}
-
-export const pricingPlans: PricingPlan[] = [
+export const defaultPricing: PricingPlan[] = [
   {
     id: 'starter',
     nameAr: 'باقة الانطلاق (Starter)',
@@ -282,8 +254,9 @@ export const pricingPlans: PricingPlan[] = [
   },
 ]
 
-export const testimonialsData = [
+export const defaultTestimonials: Testimonial[] = [
   {
+    id: 'omar-el-sherif',
     nameAr: 'م. عمر الشريف',
     nameEn: 'Omar El-Sherif',
     roleAr: 'المؤسس والرئيس التنفيذي - Aura Skin',
@@ -295,6 +268,7 @@ export const testimonialsData = [
     metric: '+1,650% Orders',
   },
   {
+    id: 'sarah-abdallah',
     nameAr: 'سارة عبد الله',
     nameEn: 'Sarah Abdallah',
     roleAr: 'مديرة التسويق - Nova Living',
@@ -306,6 +280,7 @@ export const testimonialsData = [
     metric: '4.8x ROAS',
   },
   {
+    id: 'khaled-al-mansouri',
     nameAr: 'خالد المنصوري',
     nameEn: 'Khaled Al-Mansouri',
     roleAr: 'الشريك المؤسس - Nexus Logistics',
@@ -317,3 +292,18 @@ export const testimonialsData = [
     metric: '$1.4M Deals Closed',
   },
 ]
+
+export const defaultSiteContent: SiteContent = {
+  settings: {
+    whatsappNumber: '201090162098',
+    contactEmail: 'growth@grxagency.digital',
+    addressAr: 'القاهرة الجديدة، مصر / دبي، الإمارات',
+    addressEn: 'New Cairo, Egypt / Dubai, UAE',
+    hoursAr: 'الأحد - الخميس: 9:00 ص - 6:00 م',
+    hoursEn: 'Sun - Thu: 9:00 AM - 6:00 PM',
+  },
+  services: defaultServices,
+  portfolio: defaultPortfolio,
+  pricing: defaultPricing,
+  testimonials: defaultTestimonials,
+}

@@ -13,14 +13,18 @@ import {
   MessageCircle,
 } from 'lucide-react'
 import confetti from 'canvas-confetti'
-import { buildWhatsAppLeadUrl, WHATSAPP_NUMBER, WHATSAPP_DISPLAY } from '@/lib/whatsapp'
+import { buildWhatsAppLeadUrl, formatWhatsAppDisplay } from '@/lib/whatsapp'
+import { trackEvent, submitLead } from '@/lib/analytics-client'
+import { SiteSettings } from '@/lib/types'
 
 interface ContactSectionProps {
+  settings: SiteSettings
   initialService?: string
   initialBudget?: string
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({
+  settings,
   initialService = '',
   initialBudget = '',
 }) => {
@@ -52,7 +56,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     e.preventDefault()
     setIsSubmitting(true)
 
-    const whatsappUrl = buildWhatsAppLeadUrl(formData, lang === 'ar')
+    const whatsappUrl = buildWhatsAppLeadUrl(formData, lang === 'ar', settings.whatsappNumber)
+
+    // Record the lead and the conversion event immediately - independent
+    // of whether the visitor actually finishes sending on WhatsApp - so it
+    // always shows up in the dashboard.
+    submitLead(formData, 'section')
+    trackEvent('form_submit', { source: 'section' })
 
     // Simulate instant processing & validation
     setTimeout(() => {
@@ -115,9 +125,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               <div className="space-y-4 pt-2">
                 {/* WhatsApp Direct */}
                 <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  href={`https://wa.me/${settings.whatsappNumber}`}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackEvent('whatsapp_click', { source: 'section-direct' })}
                   className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-800/50 hover:border-emerald-500 text-emerald-300 hover:text-emerald-200 transition-all group"
                 >
                   <div className="w-10 h-10 rounded-xl bg-emerald-900/80 flex items-center justify-center shrink-0">
@@ -125,7 +136,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   </div>
                   <div>
                     <div className="text-xs text-zinc-400">{isAr ? 'محادثة فورية عبر واتساب' : 'Chat on WhatsApp'}</div>
-                    <div className="text-sm font-bold">{WHATSAPP_DISPLAY}</div>
+                    <div className="text-sm font-bold">{formatWhatsAppDisplay(settings.whatsappNumber)}</div>
                   </div>
                 </a>
 
@@ -136,7 +147,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   </div>
                   <div>
                     <div className="text-xs text-zinc-400">{isAr ? 'البريد الإلكتروني' : 'Email Us'}</div>
-                    <div className="text-sm font-bold text-white">growth@grxagency.digital</div>
+                    <div className="text-sm font-bold text-white">{settings.contactEmail}</div>
                   </div>
                 </div>
 
@@ -148,7 +159,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   <div>
                     <div className="text-xs text-zinc-400">{isAr ? 'المقر الرئيسي' : 'Headquarters'}</div>
                     <div className="text-sm font-bold text-white">
-                      {isAr ? 'القاهرة الجديدة، مصر / دبي، الإمارات' : 'New Cairo, Egypt / Dubai, UAE'}
+                      {isAr ? settings.addressAr : settings.addressEn}
                     </div>
                   </div>
                 </div>
@@ -161,7 +172,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   <div>
                     <div className="text-xs text-zinc-400">{isAr ? 'ساعات العمل' : 'Working Hours'}</div>
                     <div className="text-sm font-bold text-white">
-                      {isAr ? 'الأحد - الخميس: 9:00 ص - 6:00 م' : 'Sun - Thu: 9:00 AM - 6:00 PM'}
+                      {isAr ? settings.hoursAr : settings.hoursEn}
                     </div>
                   </div>
                 </div>

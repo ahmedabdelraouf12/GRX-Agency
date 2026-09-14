@@ -5,17 +5,20 @@ import { useLanguage } from '@/context/LanguageContext'
 import { X, Send, Sparkles, CheckCircle2 } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import { buildWhatsAppLeadUrl } from '@/lib/whatsapp'
+import { trackEvent, submitLead } from '@/lib/analytics-client'
 
 interface ContactModalProps {
   isOpen: boolean
   onClose: () => void
   initialService?: string
+  whatsappNumber: string
 }
 
 export const ContactModal: React.FC<ContactModalProps> = ({
   isOpen,
   onClose,
   initialService = '',
+  whatsappNumber,
 }) => {
   const { t, lang } = useLanguage()
 
@@ -56,7 +59,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     e.preventDefault()
     setIsSubmitting(true)
 
-    const whatsappUrl = buildWhatsAppLeadUrl(formData, lang === 'ar')
+    const whatsappUrl = buildWhatsAppLeadUrl(formData, lang === 'ar', whatsappNumber)
+
+    submitLead(formData, 'modal')
+    trackEvent('form_submit', { source: 'modal' })
 
     setTimeout(() => {
       setIsSubmitting(false)

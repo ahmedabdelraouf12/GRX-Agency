@@ -1,91 +1,31 @@
-'use client'
+import HomeClient from './HomeClient'
+import { apiUrl } from '@/lib/api'
+import { SiteContent } from '@/lib/types'
+import { defaultSiteContent } from '@/lib/data'
 
-import React, { useState } from 'react'
-import { Navbar } from '@/components/Navbar'
-import { Hero } from '@/components/Hero'
-import { LogoTicker } from '@/components/LogoTicker'
-import { Services } from '@/components/Services'
-import { Portfolio } from '@/components/Portfolio'
-import { RoiCalculator } from '@/components/RoiCalculator'
-import { Process } from '@/components/Process'
-import { Pricing } from '@/components/Pricing'
-import { Testimonials } from '@/components/Testimonials'
-import { ContactSection } from '@/components/ContactSection'
-import { Footer } from '@/components/Footer'
-import { ContactModal } from '@/components/ContactModal'
+// Content is editable live from /dashboard/content (backed by the .NET API
+// at H:\Grx-Agency-Backend), so this page must always fetch the current
+// data on each request instead of being statically cached at build time.
+export const dynamic = 'force-dynamic'
 
-export default function Home() {
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
-  const [selectedService, setSelectedService] = useState('')
-  const [selectedBudget, setSelectedBudget] = useState('')
-
-  const handleOpenContactModal = (service?: string) => {
-    if (service) setSelectedService(service)
-    setIsContactModalOpen(true)
+async function getSiteContent(): Promise<SiteContent> {
+  try {
+    const res = await fetch(apiUrl('/api/content'), { cache: 'no-store' })
+    if (!res.ok) throw new Error(`API returned ${res.status}`)
+    return await res.json()
+  } catch (err) {
+    // If the backend is briefly unreachable, ship the built-in seed
+    // content rather than a broken page.
+    console.error('Failed to fetch site content from API, using fallback:', err)
+    return defaultSiteContent
   }
+}
 
-  const handleSelectService = (serviceName: string) => {
-    setSelectedService(serviceName)
-    // Scroll smoothly to contact section or open modal
-    const contactElem = document.getElementById('contact')
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' })
-    } else {
-      setIsContactModalOpen(true)
-    }
-  }
-
-  const handleSelectPlan = (planName: string) => {
-    setSelectedService(`باقة: ${planName}`)
-    const contactElem = document.getElementById('contact')
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' })
-    } else {
-      setIsContactModalOpen(true)
-    }
-  }
-
-  const handleClaimCalculatedPlan = (budget: string, objective: string) => {
-    setSelectedBudget(budget)
-    setSelectedService(`حملة: ${objective}`)
-    const contactElem = document.getElementById('contact')
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' })
-    } else {
-      setIsContactModalOpen(true)
-    }
-  }
-
-  return (
-    <div className="min-h-screen bg-[#09090b] text-slate-100 selection:bg-brand-500 selection:text-white relative">
-      {/* Navigation */}
-      <Navbar onOpenContact={() => setIsContactModalOpen(true)} />
-
-      {/* Main Content Sections */}
-      <main>
-        <Hero onOpenContact={() => setIsContactModalOpen(true)} />
-        <LogoTicker />
-        <Services onSelectService={handleSelectService} />
-        <Portfolio onOpenContact={() => setIsContactModalOpen(true)} />
-        <RoiCalculator onClaimPlan={handleClaimCalculatedPlan} />
-        <Process />
-        <Pricing onSelectPlan={handleSelectPlan} />
-        <Testimonials />
-        <ContactSection
-          initialService={selectedService}
-          initialBudget={selectedBudget}
-        />
-      </main>
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Reusable Lead Modal */}
-      <ContactModal
-        isOpen={isContactModalOpen}
-        onClose={() => setIsContactModalOpen(false)}
-        initialService={selectedService}
-      />
-    </div>
-  )
+// Server Component: fetches the live, dashboard-editable content from the
+// backend API on each request and hands it down to the interactive client
+// tree. Keeping this file a Server Component (instead of 'use client')
+// avoids a client-side fetch/loading flash for content that rarely changes.
+export default async function Home() {
+  const content = await getSiteContent()
+  return <HomeClient content={content} />
 }

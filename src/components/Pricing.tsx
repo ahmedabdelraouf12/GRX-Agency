@@ -2,14 +2,16 @@
 
 import React from 'react'
 import { useLanguage } from '@/context/LanguageContext'
-import { pricingPlans, PricingPlan } from '@/lib/data'
+import { PricingPlan } from '@/lib/types'
 import { Check, Sparkles, Zap, ArrowRight, ArrowLeft } from 'lucide-react'
+import { Reveal } from '@/components/Reveal'
 
 interface PricingProps {
+  pricingPlans: PricingPlan[]
   onSelectPlan: (planName: string) => void
 }
 
-export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
+export const Pricing: React.FC<PricingProps> = ({ pricingPlans, onSelectPlan }) => {
   const { t, lang, isRTL } = useLanguage()
 
   return (
@@ -34,7 +36,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
 
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-          {pricingPlans.map((plan: PricingPlan) => {
+          {pricingPlans.map((plan: PricingPlan, idx: number) => {
             const name = lang === 'ar' ? plan.nameAr : plan.nameEn
             const price = lang === 'ar' ? plan.priceAr : plan.priceEn
             const period = lang === 'ar' ? plan.periodAr : plan.periodEn
@@ -42,9 +44,9 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
             const features = lang === 'ar' ? plan.featuresAr : plan.featuresEn
 
             return (
+              <Reveal key={plan.id} index={idx} className="h-full">
               <div
-                key={plan.id}
-                className={`rounded-3xl p-8 flex flex-col justify-between relative transition-all duration-300 ${
+                className={`rounded-3xl p-8 flex flex-col justify-between relative transition-all duration-300 h-full ${
                   plan.popular
                     ? 'bg-zinc-900/90 border-2 border-brand-500 shadow-2xl shadow-brand-500/20 lg:-translate-y-2'
                     : 'glass-card border border-zinc-800/80'
@@ -108,6 +110,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
                   )}
                 </button>
               </div>
+              </Reveal>
             )
           })}
         </div>

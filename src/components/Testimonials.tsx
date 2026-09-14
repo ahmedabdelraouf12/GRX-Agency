@@ -2,10 +2,15 @@
 
 import React from 'react'
 import { useLanguage } from '@/context/LanguageContext'
-import { testimonialsData } from '@/lib/data'
+import { Testimonial } from '@/lib/types'
 import { Star, Sparkles, Quote, TrendingUp } from 'lucide-react'
+import { Reveal } from '@/components/Reveal'
 
-export const Testimonials: React.FC = () => {
+interface TestimonialsProps {
+  testimonials: Testimonial[]
+}
+
+export const Testimonials: React.FC<TestimonialsProps> = ({ testimonials }) => {
   const { t, lang } = useLanguage()
 
   return (
@@ -24,10 +29,10 @@ export const Testimonials: React.FC = () => {
 
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonialsData.map((item, idx) => (
+          {testimonials.map((item, idx) => (
+            <Reveal key={item.id} index={idx} className="h-full">
             <div
-              key={idx}
-              className="glass-card rounded-3xl p-8 border border-zinc-800/80 flex flex-col justify-between relative group hover:-translate-y-1.5 transition-all duration-300"
+              className="glass-card rounded-3xl p-8 border border-zinc-800/80 flex flex-col justify-between relative group hover:-translate-y-1.5 transition-all duration-300 h-full"
             >
               <Quote className="absolute top-6 right-6 w-10 h-10 text-zinc-800/60 -z-0 pointer-events-none group-hover:text-brand-500/20 transition-colors" />
 
@@ -69,6 +74,7 @@ export const Testimonials: React.FC = () => {
                 </div>
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>

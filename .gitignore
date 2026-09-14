@@ -25,6 +25,10 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# runtime dashboard data (site content, leads, analytics) - this is live
+# state, not source code, and leads/analytics can contain visitor PII
+/data
+
 # vercel
 .vercel
 
