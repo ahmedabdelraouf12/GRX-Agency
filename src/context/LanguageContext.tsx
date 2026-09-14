@@ -38,18 +38,6 @@ const translations: Record<Language, Record<string, string>> = {
     hero_stat_clients: '+250',
     hero_stat_clients_sub: 'علامة تجارية واثقة بنا',
 
-    // Ginkgo Product Hero
-    hero_ginkgo_brand: 'بيولايف',
-    hero_ginkgo_title_line1: 'جنكو',
-    hero_ginkgo_title_line2: 'فائق القوة',
-    hero_ginkgo_title_line3: 'والتركيز الذهني',
-    hero_ginkgo_desc: 'يحافظ فيتامين B8 أو البيوتين على التوازن الدهني لفروة الرأس ويمنع القشرة وتقصف الأطراف، مع دعم التركيز ووظائف الذاكرة.',
-    hero_ginkgo_cta: 'اختر منتجك الآن',
-    hero_ginkgo_badge_b8: 'فيتامين B8',
-    hero_ginkgo_badge_memory: 'يعزز الذاكرة والتركيز',
-    hero_ginkgo_badge_supplement: 'مكمل غذائي معتمد',
-    hero_ginkgo_consult: 'استشارة الآن',
-
     // Trusted By
     trusted_title: 'شريك النمو الموثوق لأكثر من 250+ علامة تجارية رائدة في الشرق الأوسط',
 
@@ -179,18 +167,6 @@ const translations: Record<Language, Record<string, string>> = {
     hero_stat_roas_sub: 'Average Campaign ROAS',
     hero_stat_clients: '250+',
     hero_stat_clients_sub: 'Brands Scaled Globally',
-
-    // Ginkgo Product Hero
-    hero_ginkgo_brand: 'Biolife',
-    hero_ginkgo_title_line1: 'EXTRA',
-    hero_ginkgo_title_line2: 'STRENGTH',
-    hero_ginkgo_title_line3: 'GINKGO',
-    hero_ginkgo_desc: 'Vitamin B8 or biotin maintains the lipid balance of the scalp and prevents dandruff and split ends.',
-    hero_ginkgo_cta: 'Choose a product',
-    hero_ginkgo_badge_b8: 'Vitamin B8',
-    hero_ginkgo_badge_memory: 'Improves memory',
-    hero_ginkgo_badge_supplement: 'Dietary Supplement',
-    hero_ginkgo_consult: 'Consult now',
 
     // Trusted By
     trusted_title: 'Trusted Growth Partner for 250+ High-Growth Brands & Industry Leaders',
