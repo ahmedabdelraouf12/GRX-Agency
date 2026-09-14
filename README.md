@@ -1,4 +1,4 @@
-# 🚀 Apex Marketing Agency Website (Next.js & React)
+# 🚀 GRX Agency Website (Next.js & React)
 
 موقع ويب عصري واحترافي لوكالة تسويق رقمية (Digital Growth & Marketing Agency) مصمم بأحدث التقنيات وأعلى معايير تجربة المستخدم والتحويل (CRO).
 

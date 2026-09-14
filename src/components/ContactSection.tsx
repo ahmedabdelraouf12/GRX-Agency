@@ -136,7 +136,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   </div>
                   <div>
                     <div className="text-xs text-zinc-400">{isAr ? 'البريد الإلكتروني' : 'Email Us'}</div>
-                    <div className="text-sm font-bold text-white">growth@apexagency.digital</div>
+                    <div className="text-sm font-bold text-white">growth@grxagency.digital</div>
                   </div>
                 </div>
 

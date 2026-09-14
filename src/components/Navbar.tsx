@@ -50,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-black tracking-tight text-white flex items-center gap-1">
-                APEX <span className="text-brand-400 font-normal">AGENCY</span>
+                GRX <span className="text-brand-400 font-normal">AGENCY</span>
               </span>
               <span className="text-[10px] text-zinc-400 font-medium tracking-widest uppercase">
                 {lang === 'ar' ? 'نمو وتسويق استراتيجي' : 'Digital Growth Lab'}

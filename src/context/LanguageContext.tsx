@@ -149,7 +149,7 @@ const translations: Record<Language, Record<string, string>> = {
     footer_quick_links: 'روابط سريعة',
     footer_services: 'خدماتنا',
     footer_contact_info: 'معلومات التواصل',
-    footer_rights: 'جميع الحقوق محفوظة © 2026 وكالة Apex Marketing.',
+    footer_rights: 'جميع الحقوق محفوظة © 2026 وكالة GRX.',
     footer_newsletter_title: 'اشترك في نشرتنا التسويقية',
     footer_newsletter_desc: 'أحدث أسرار وتكتيكات التجارة الإلكترونية والتسويق الرقمي أسبوعياً في بريدك.',
     footer_newsletter_btn: 'اشترك الآن',
@@ -291,7 +291,7 @@ const translations: Record<Language, Record<string, string>> = {
     footer_quick_links: 'Quick Links',
     footer_services: 'Services',
     footer_contact_info: 'Get in Touch',
-    footer_rights: 'All Rights Reserved © 2026 Apex Marketing Agency.',
+    footer_rights: 'All Rights Reserved © 2026 GRX Agency.',
     footer_newsletter_title: 'Join Our Growth Newsletter',
     footer_newsletter_desc: 'Weekly breakdown of high-converting marketing strategies and consumer trends.',
     footer_newsletter_btn: 'Subscribe Now',
@@ -309,7 +309,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [lang, setLangState] = useState<Language>('ar')
 
   useEffect(() => {
-    const saved = localStorage.getItem('apex_agency_lang') as Language
+    const saved = localStorage.getItem('grx_agency_lang') as Language
     if (saved && (saved === 'ar' || saved === 'en')) {
       setLangState(saved)
     }
@@ -317,7 +317,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const setLang = (newLang: Language) => {
     setLangState(newLang)
-    localStorage.setItem('apex_agency_lang', newLang)
+    localStorage.setItem('grx_agency_lang', newLang)
     document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr'
     document.documentElement.lang = newLang
   }

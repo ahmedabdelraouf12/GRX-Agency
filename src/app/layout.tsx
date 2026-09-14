@@ -18,12 +18,12 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Apex Marketing | وكالة التسويق الرقمي والنمو المتكامل',
+  title: 'GRX Agency | وكالة التسويق الرقمي والنمو المتكامل',
   description: 'وكالة رائدة في إدارة الإعلانات الممولة، تحسين محركات البحث، وصناعة المحتوى الإبداعي لمضاعفة مبيعاتك وأرباحك.',
   keywords: ['تسويق رقمي', 'إعلانات فيسبوك', 'تيك توك', 'سوشيال ميديا', 'SEO', 'متاجر إلكترونية', 'Digital Marketing Agency'],
-  authors: [{ name: 'Apex Agency' }],
+  authors: [{ name: 'GRX Agency' }],
   openGraph: {
-    title: 'Apex Marketing Agency | حلول تسويق ونمو استثنائية',
+    title: 'GRX Agency | حلول تسويق ونمو استثنائية',
     description: 'نضاعف مبيعاتك ونبني علامات تجارية لا تُنسى بأحدث تقنيات التسويق الرقمي.',
     type: 'website',
   },

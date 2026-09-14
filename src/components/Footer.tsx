@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
               <span className="text-2xl font-black text-white tracking-tight">
-                APEX <span className="text-brand-400 font-normal">AGENCY</span>
+                GRX <span className="text-brand-400 font-normal">AGENCY</span>
               </span>
             </a>
 
