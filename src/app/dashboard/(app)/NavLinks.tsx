@@ -2,13 +2,14 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Users, FileEdit, BarChart3 } from 'lucide-react'
+import { LayoutDashboard, Users, FileEdit, BarChart3, UserCog } from 'lucide-react'
 
 const links = [
   { href: '/dashboard', label: 'نظرة عامة', icon: LayoutDashboard, exact: true },
   { href: '/dashboard/leads', label: 'طلبات التواصل', icon: Users, exact: false },
   { href: '/dashboard/content', label: 'محتوى الموقع', icon: FileEdit, exact: false },
   { href: '/dashboard/analytics', label: 'الإحصائيات', icon: BarChart3, exact: false },
+  { href: '/dashboard/users', label: 'حسابات الدخول', icon: UserCog, exact: false },
 ]
 
 export function NavLinks() {

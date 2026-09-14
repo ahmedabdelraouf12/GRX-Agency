@@ -11,6 +11,7 @@ function LoginForm() {
   const searchParams = useSearchParams()
   const next = searchParams.get('next') || '/dashboard'
 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -23,7 +24,7 @@ function LoginForm() {
       const res = await fetch(apiUrl('/api/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ username, password }),
       })
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
@@ -31,8 +32,8 @@ function LoginForm() {
         setLoading(false)
         return
       }
-      const { token } = await res.json()
-      saveToken(token)
+      const { token, username: loggedInUsername } = await res.json()
+      saveToken(token, loggedInUsername)
       router.push(next)
     } catch {
       setError('تعذر الاتصال بالسيرفر')
@@ -50,15 +51,26 @@ function LoginForm() {
             </div>
           </div>
           <h1 className="text-xl font-black text-white">لوحة تحكم GRX Agency</h1>
-          <p className="text-xs text-zinc-500 mt-1">أدخل كلمة المرور للمتابعة</p>
+          <p className="text-xs text-zinc-500 mt-1">أدخل بيانات الدخول للمتابعة</p>
         </div>
 
         <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-6 border border-zinc-800/80 space-y-4">
           <div>
+            <label className="block text-xs font-bold text-zinc-300 mb-1.5">اسم المستخدم</label>
+            <input
+              type="text"
+              autoFocus
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full bg-zinc-900 border border-zinc-800 focus:border-brand-500 rounded-xl px-4 py-2.5 text-sm text-white placeholder-zinc-600 focus:outline-none"
+              placeholder="admin"
+            />
+          </div>
+          <div>
             <label className="block text-xs font-bold text-zinc-300 mb-1.5">كلمة المرور</label>
             <input
               type="password"
-              autoFocus
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
